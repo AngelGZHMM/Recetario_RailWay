@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    # Esta linea de abajo hace que cada vez que se reinicie se inicia solo
+    # restart: always
+    ports:
+      - 8080:80
+    environment:
+    # Public Networking
+      - PMA_HOST=switchyard.proxy.rlwy.net:29369
+      - PMA_PORT=3306
+      # MYSQLUSER
+      - PMA_USER=root
+      # MYSQL_ROOT_PASSWORD
+      - PMA_PASSWORD=gVWQTySUUbRUAWZmVtbsWFLLhmoXuyfb
