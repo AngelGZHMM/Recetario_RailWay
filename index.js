@@ -1,5 +1,6 @@
 //importar libreria para manejo de configuracion
-require('dotenv').config();
+require("dotenv").config({
+  path: `env.${process.env.NODE_ENV || "development"}`});
 const config = require('./config/config');
 // Importar librería express --> web server
 const express = require("express");
