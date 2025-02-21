@@ -23,7 +23,7 @@ app.use(express.json());
 console.log("Middleware JSON configurado");
 
 // Configurar CORS (descomenta la siguiente línea si lo requieres)
-app.use(cors());
+// app.use(cors());
 console.log("CORS configurado");
 
 // Configurar rutas de la API Rest
