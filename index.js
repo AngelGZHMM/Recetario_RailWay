@@ -1,25 +1,28 @@
-//importar libreria para manejo de configuracion
-require("dotenv").config({
-  path: `env.${process.env.NODE_ENV || "development"}`});
+// index.js
+
+// Importar la configuración (que ya carga las variables de entorno)
 const config = require('./config/config');
-// Importar librería express --> web server
+
+// Importar librerías necesarias
 const express = require("express");
-// Importar librería path, para manejar rutas de ficheros en el servidor
 const path = require("path");
-// Importar libreria CORS
 const cors = require("cors");
-// Importar gestores de rutas
+
+// Importar rutas
 const pasosRoutes = require("./routes/pasosRoutes");
 const recetaRoutes = require("./routes/recetaRoutes");
 
+// Crear la instancia de Express
 const app = express();
-const port = process.env.PORT || 3000;
+
+// Definir el puerto (se obtiene de la configuración)
+const port = config.port;
 
 // Configurar middleware para analizar JSON en las solicitudes
 app.use(express.json());
 console.log("Middleware JSON configurado");
 
-// Configurar CORS para admitir cualquier origen
+// Configurar CORS (descomenta la siguiente línea si lo requieres)
 // app.use(cors());
 console.log("CORS configurado");
 
@@ -28,25 +31,23 @@ app.use("/api/pasos", pasosRoutes);
 app.use("/api/receta", recetaRoutes);
 console.log("Rutas configuradas");
 
+// Servir archivos estáticos desde la carpeta "public"
+app.use(express.static(path.join(__dirname, "public")));
+console.log("Servidor de archivos estáticos configurado");
+
+// Ruta base: cualquier otra ruta servirá el archivo index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
+console.log("Ruta base configurada");
+
 // Middleware para manejar errores
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
-// Iniciar el servidor
+// Iniciar el servidor (única llamada a app.listen)
 app.listen(port, () => {
   console.log(`Servidor escuchando en el puerto ${port}`);
 });
-
- app.listen(config.port, () => { 
-  console.log(`Servidor escuchando en el puerto ${config.port}`); });
-
-app.use(express.static(path.join(__dirname, "public")));
-console.log("Servidor de archivos estáticos configurado");
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public/index.html"));
-});
-console.log("Ruta base configurada");
-
