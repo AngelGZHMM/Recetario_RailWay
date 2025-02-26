@@ -11,8 +11,6 @@ const express = require("express");
 const path = require("path");
 // Importar libreria CORS
 const cors = require("cors");
-// Importar librería de manejo de cookies
-const cookieParser = require("cookie-parser");
 // Importar gestores de rutas
 const recetaRoutes = require("./routes/recetaRoutes");
 const pasosRoutes = require("./routes/pasosRoutes");
@@ -36,8 +34,6 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
-// Habilitar el análisis de cookies
-app.use(cookieParser());
 
 // Configurar rutas de la API Rest
 app.use("/api/receta", recetaRoutes);
