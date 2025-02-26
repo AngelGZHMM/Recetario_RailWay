@@ -53,10 +53,10 @@ if (process.env.NODE_ENV !== "production") {
 } else {
   console.log("Sirviendo ficheros de producción");
   // Configurar el middleware para servir archivos estáticos desde el directorio public/dev en producción
-  app.use(express.static(path.join(__dirname, "public/prod")));
+  app.use(express.static(path.join(__dirname, "public")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/prod", "index.html"));
+    res.sendFile(path.join(__dirname, "public", "index.html"));
   });
 }
 
